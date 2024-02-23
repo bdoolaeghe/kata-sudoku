@@ -61,14 +61,14 @@ class GridResolverTest {
     void should_resolve_hard_grid() {
         var hardGrid = """
             _ 3 _ 8 7 6 _ 1 2
-            _ 2 _ 3 1 4 _ _ 5
+            _ 2 _ 3 _ _ _ _ 5
             6 _ _ 2 9 _ 7 _ 8
-            4 6 2 _ 3 _ 8 7 _
+            _ 6 2 _ 3 _ 8 7 _
             _ _ 5 7 _ 1 6 _ 9
             _ _ 7 _ 6 _ 2 _ 3
-            2 _ 6 _ 8 7 _ 9 4
+            2 _ 6 _ 8 _ _ 9 4
             _ 1 _ 6 _ 2 5 _ 7
-            8 7 4 _ 5 3 _ 2 6
+            8 7 _ _ 5 _ _ 2 6
             """;
 
         var solution = GridResolver.resolve(Grid.parse(hardGrid));
@@ -84,6 +84,37 @@ class GridResolverTest {
                 2 5 6 1 8 7 3 9 4
                 9 1 3 6 4 2 5 8 7
                 8 7 4 9 5 3 1 2 6
+                """
+        );
+    }
+
+    @Test
+    void should_resolve_empty_grid() {
+        var hardGrid = """
+            _ _ _ _ _ _ _ _ _
+            _ _ _ _ _ _ _ _ _
+            _ _ _ _ _ _ _ _ _
+            _ _ _ _ _ _ _ _ _
+            _ _ _ _ _ _ _ _ _
+            _ _ _ _ _ _ _ _ _
+            _ _ _ _ _ _ _ _ _
+            _ _ _ _ _ _ _ _ _
+            _ _ _ _ _ _ _ _ _
+            """;
+
+        var solution = GridResolver.resolve(Grid.parse(hardGrid));
+
+        assertThat(solution.toString()).isEqualTo(
+                """
+                1 2 3 4 5 6 7 8 9
+                4 5 6 7 8 9 1 2 3
+                7 8 9 1 2 3 4 5 6
+                2 1 4 3 6 5 8 9 7
+                3 6 5 8 9 7 2 1 4
+                8 9 7 2 1 4 3 6 5
+                5 3 1 6 4 2 9 7 8
+                6 4 2 9 7 8 5 3 1
+                9 7 8 5 3 1 6 4 2
                 """
         );
     }
