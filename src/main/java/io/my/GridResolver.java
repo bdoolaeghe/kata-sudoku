@@ -31,9 +31,9 @@ public class GridResolver {
             for (int value = 1; value < 10; value++) {
                 var candidate = emptyCell.filledWith(value);
                 if (grid.acceptCell(candidate)) {
-                    var subSolution = resolve(grid.filledWith(candidate));
-                    if (subSolution != null) {
-                        return subSolution;
+                    var solution = resolve(grid.filledWith(candidate));
+                    if (solution != null) {
+                        return solution;
                     }
                 }
             }
