@@ -87,7 +87,7 @@ class GridTest {
                 7 _ 9
                 """);
 
-            assertThat(grid.filledWith(Cell.at(2, 1).withValue("8"))).isEqualTo(
+            assertThat(grid.filledWith(Cell.at(2, 1).filledWith(8))).isEqualTo(
                     Grid.parse("""
                 1 2 _
                 4 5 6
@@ -125,7 +125,7 @@ class GridTest {
                     """);
 
             // When
-            var foundBlock = grid.getBlockContaining(Cell.at(5, 5).withValue("any"));
+            var foundBlock = grid.getBlockContaining(Cell.at(5, 5).containing("any"));
 
             // Then
             assertThat(foundBlock.toString()).isEqualTo(
@@ -153,7 +153,7 @@ class GridTest {
                     """);
 
             // When
-            var foundBlock = grid.getBlockContaining(Cell.at(0, 0).withValue("any"));
+            var foundBlock = grid.getBlockContaining(Cell.at(0, 0).containing("any"));
 
             // Then
             assertThat(foundBlock.toString()).isEqualTo(
@@ -181,7 +181,7 @@ class GridTest {
                     """);
 
             // When
-            var foundBlock = grid.getBlockContaining(Cell.at(8, 8).withValue("any"));
+            var foundBlock = grid.getBlockContaining(Cell.at(8, 8).containing("any"));
 
             // Then
             assertThat(foundBlock.toString()).isEqualTo(
@@ -214,7 +214,7 @@ class GridTest {
                     """);
 
             // when/then
-            assertThat(grid.acceptCell(Cell.at(0, 2).withValue("3"))).isTrue();
+            assertThat(grid.acceptCell(Cell.at(0, 2).filledWith(3))).isTrue();
         }
 
         @Test
@@ -233,7 +233,7 @@ class GridTest {
                     """);
 
             // when/then
-            assertThat(grid.acceptCell(Cell.at(0, 2).withValue("1"))).isFalse();
+            assertThat(grid.acceptCell(Cell.at(0, 2).filledWith(1))).isFalse();
         }
 
         @Test
@@ -252,7 +252,7 @@ class GridTest {
                     """);
 
             // when/then
-            assertThat(grid.acceptCell(Cell.at(0, 2).withValue("9"))).isFalse();
+            assertThat(grid.acceptCell(Cell.at(0, 2).filledWith(9))).isFalse();
         }
 
         @Test
@@ -271,13 +271,13 @@ class GridTest {
                     """);
 
             // when/then
-            assertThat(grid.acceptCell(Cell.at(2, 1).withValue("4"))).isFalse();
+            assertThat(grid.acceptCell(Cell.at(2, 1).filledWith(4))).isFalse();
         }
 
     }
 
     @Nested
-    class AnEmptyCell {
+    class FindFirstEmptyCell {
         @Test
         void should_find_an_empty_cell() {
             assertThat(Grid.parse("""
@@ -285,7 +285,7 @@ class GridTest {
                 4 5 6
                 7 _ 9
                 """).findFistEmptyCell())
-                    .isEqualTo(Cell.at(2, 1).withValue("_"));
+                    .isEqualTo(Cell.at(2, 1).containing("_"));
         }
 
         @Test

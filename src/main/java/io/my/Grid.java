@@ -1,6 +1,8 @@
 package io.my;
 
 
+import io.my.Cell.EmptyCell;
+import io.my.Cell.ValuedCell;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
@@ -8,7 +10,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.function.Predicate.not;
-
 
 @AllArgsConstructor
 public class Grid {
@@ -27,41 +28,50 @@ public class Grid {
                 .isEmpty();
     }
 
-    boolean acceptCell(Cell proposal) {
+    boolean acceptCell(ValuedCell proposal) {
         return hasNoDuplicateValueOnRow(proposal) &&
                 hasNoDuplicateValueOnColumn(proposal) &&
                 hasNoDuplicateValueOnBlock(proposal);
     }
 
-    private boolean hasNoDuplicateValueOnRow(Cell proposal) {
+    private boolean hasNoDuplicateValueOnRow(ValuedCell proposal) {
         return !this.getRow(proposal.rowIndex)
                 .contains(proposal.value);
     }
 
-    private boolean hasNoDuplicateValueOnColumn(Cell proposal) {
+    private boolean hasNoDuplicateValueOnColumn(ValuedCell proposal) {
         return !this.getColumn(proposal.columnIndex)
                 .contains(proposal.value);
     }
 
-    private boolean hasNoDuplicateValueOnBlock(Cell proposal) {
+    private boolean hasNoDuplicateValueOnBlock(ValuedCell proposal) {
         return !this.getBlockContaining(proposal)
                 .contains(proposal.value);
     }
 
     Block getBlockContaining(Cell cell) {
-        int rowIndexStart = Block.SIZE * (cell.rowIndex / Block.SIZE);
-        int rowIndexEnd = rowIndexStart + Block.SIZE;
-        var subRows = Arrays.copyOfRange(this.content, rowIndexStart, rowIndexEnd);
-        int columnIndexStart = Block.SIZE * (cell.columnIndex / Block.SIZE);
-        int columnIndexEnd = columnIndexStart + Block.SIZE;
-        var subSquare = new String[3][3];
-        for (int i = 0; i < subRows.length; i++) {
-            subSquare[i] = Arrays.copyOfRange(subRows[i], columnIndexStart, columnIndexEnd);
-        }
-        return new Block(subSquare);
+        var rowsAround = cropRowsAround(cell, this.content);
+        var blockAround = cropColumnsAround(cell, rowsAround);
+        return new Block(blockAround);
     }
 
-    Grid filledWith(Cell value) {
+    private static String[][] cropRowsAround(Cell cell, String[][] content) {
+        int rowIndexStart = Block.SIZE * (cell.rowIndex / Block.SIZE);
+        int rowIndexEnd = rowIndexStart + Block.SIZE;
+        return Arrays.copyOfRange(content, rowIndexStart, rowIndexEnd);
+    }
+
+    private static String[][] cropColumnsAround(Cell cell, String[][] rows) {
+        int columnIndexStart = Block.SIZE * (cell.columnIndex / Block.SIZE);
+        int columnIndexEnd = columnIndexStart + Block.SIZE;
+        var block = new String[Block.SIZE][Block.SIZE];
+        for (int i = 0; i < rows.length; i++) {
+            block[i] = Arrays.copyOfRange(rows[i], columnIndexStart, columnIndexEnd);
+        }
+        return block;
+    }
+
+    Grid filledWith(ValuedCell value) {
         var copy = copy(content);
         copy[value.rowIndex][value.columnIndex] = value.value;
         return new Grid(copy);
@@ -75,9 +85,9 @@ public class Grid {
         return copy;
     }
 
-    Cell findFistEmptyCell() {
+    EmptyCell findFistEmptyCell() {
         for (int i = 0; i < getSize(); i++) {
-            var cell = getRow(i).anEmptyCell();
+            var cell = getRow(i).findFirstEmptyCell();
             if (cell != null)
                 return cell;
         }

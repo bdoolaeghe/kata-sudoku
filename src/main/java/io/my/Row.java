@@ -1,43 +1,46 @@
 package io.my;
 
+import io.my.Cell.EmptyCell;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.joining;
 
 @AllArgsConstructor
 public class Row {
 
     int rowIndex;
-    String[] values;
+    String[] content;
 
     @Override
     public String toString() {
         return toCells().stream()
                 .map(Cell::toString)
-                .collect(Collectors.joining( " " ));
+                .collect(joining( " " ));
     }
 
     private List<Cell> toCells() {
-        List<Cell> cells = new ArrayList<>();
-        for (int i = 0; i < values.length; i++) {
-            var value = values[i];
-            cells.add(new Cell(rowIndex, i, value));
-        }
-        return cells;
+        AtomicInteger index = new AtomicInteger(0);
+        return Stream.of(content)
+                .map(c -> Cell
+                          .at(rowIndex, index.getAndIncrement())
+                          .containing(c))
+                .toList();
     }
 
     boolean contains(String value) {
-        return Arrays.asList(values).contains(value);
+        return Arrays.asList(content).contains(value);
     }
 
-    Cell anEmptyCell() {
-        for (int i = 0; i < values.length; i++) {
-            if (values[i].equals("_")) {
-                return Cell.at(rowIndex, i).withValue(values[i]);
-            }
+    EmptyCell findFirstEmptyCell() {
+        for (int i = 0; i < content.length; i++) {
+            var cell = Cell.at(rowIndex, i).containing(content[i]);
+            if (cell.isEmpty())
+                return (EmptyCell) cell;
         }
         return null;
     }
