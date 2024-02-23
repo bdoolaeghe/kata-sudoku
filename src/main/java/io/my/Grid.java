@@ -75,7 +75,7 @@ public class Grid {
         return copy;
     }
 
-    Cell findEmptyCell() {
+    Cell findFistEmptyCell() {
         for (int i = 0; i < getSize(); i++) {
             var cell = getRow(i).anEmptyCell();
             if (cell != null)

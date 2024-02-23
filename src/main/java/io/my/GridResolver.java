@@ -27,11 +27,14 @@ public class GridResolver {
         } else  if (grid.isComplete()) {
             return grid;
         } else {
-            var emptyCell = grid.findEmptyCell();
+            var emptyCell = grid.findFistEmptyCell();
             for (int i = 1; i < 10; i++) {
-                var valueAttempt = emptyCell.filledWith(Integer.toString(i));
-                if (grid.acceptCell(valueAttempt)) {
-                    return resolve(grid.filledWith(valueAttempt));
+                var candidateValue = emptyCell.filledWith(Integer.toString(i));
+                if (grid.acceptCell(candidateValue)) {
+                    var subSolution = resolve(grid.filledWith(candidateValue));
+                    if (subSolution != null) {
+                        return subSolution;
+                    }
                 }
             }
             // no solution

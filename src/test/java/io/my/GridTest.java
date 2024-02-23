@@ -284,7 +284,7 @@ class GridTest {
                 1 2 3
                 4 5 6
                 7 _ 9
-                """).findEmptyCell())
+                """).findFistEmptyCell())
                     .isEqualTo(Cell.at(2, 1).withValue("_"));
         }
 
@@ -294,7 +294,7 @@ class GridTest {
                 1 2 3
                 4 5 6
                 7 8 9
-                """).findEmptyCell())
+                """).findFistEmptyCell())
                     .isNull();
         }
 
