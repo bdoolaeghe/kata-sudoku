@@ -21,24 +21,23 @@ public class GridResolver {
         return Resources.toString(Resources.getResource(path), StandardCharsets.UTF_8);
     }
 
-    static Grid resolve(Grid grid) {
-        if (grid == null) {
+    static Grid resolve(Grid challenge) {
+        if (challenge == null) {
             return null;
-        } else  if (grid.isComplete()) {
-            return grid;
+        } else  if (challenge.isComplete()) {
+            return challenge;
         } else {
-            var emptyCell = grid.findFistEmptyCell();
-            for (int value = 1; value < 10; value++) {
-                var candidate = emptyCell.filledWith(value);
-                if (grid.acceptCell(candidate)) {
-                    var solution = resolve(grid.filledWith(candidate));
-                    if (solution != null) {
-                        return solution;
-                    }
+            var emptyCell = challenge.findFistEmptyCell();
+            Grid solution = null;
+            int valueCandidate = 1;
+            while (solution == null && valueCandidate < 10) {
+                var cellCandidate = emptyCell.filledWith(valueCandidate);
+                if (challenge.acceptCell(cellCandidate)) {
+                    solution = resolve(challenge.filledWith(cellCandidate));
                 }
+                valueCandidate++;
             }
-            // no solution
-            return null;
+            return solution;
         }
     }
 
