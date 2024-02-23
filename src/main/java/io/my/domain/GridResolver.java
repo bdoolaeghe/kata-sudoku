@@ -1,8 +1,8 @@
-package io.my;
+package io.my.domain;
 
 public class GridResolver {
 
-    static Grid resolve(Grid challenge) {
+    public static Grid resolve(Grid challenge) {
         if (challenge == null) {
             return null;
         } else  if (challenge.isComplete()) {

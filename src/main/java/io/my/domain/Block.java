@@ -1,4 +1,4 @@
-package io.my;
+package io.my.domain;
 
 import lombok.AllArgsConstructor;
 
@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
 @AllArgsConstructor
-public class Block {
+class Block {
 
     final static int SIZE = 3;
 

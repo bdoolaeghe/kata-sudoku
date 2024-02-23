@@ -1,11 +1,11 @@
-package io.my;
+package io.my.app;
 
-import com.google.common.io.Resources;
+import io.my.domain.Grid;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
-import static io.my.GridResolver.resolve;
+import static io.my.domain.GridResolver.resolve;
+import static io.my.infra.GridReader.readFile;
 
 public class Sudoku {
 
@@ -19,7 +19,4 @@ public class Sudoku {
         }
     }
 
-    private static String readFile(String path) throws IOException {
-        return Resources.toString(Resources.getResource(path), StandardCharsets.UTF_8);
-    }
 }

@@ -1,11 +1,11 @@
-package io.my;
+package io.my.domain;
 
 import lombok.AllArgsConstructor;
 
 import java.util.List;
 
 @AllArgsConstructor
-public class Column {
+class Column {
 
     int columnIndex;
     List<String> values;

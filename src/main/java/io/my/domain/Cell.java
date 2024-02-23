@@ -1,11 +1,11 @@
-package io.my;
+package io.my.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-public abstract class Cell {
+abstract class Cell {
 
     protected int rowIndex;
     protected int columnIndex;
@@ -13,6 +13,12 @@ public abstract class Cell {
     Cell(int rowIndex, int columnIndex) {
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
+    }
+
+    abstract boolean isEmpty();
+
+    static EmptyCell at(int row, int column) {
+        return new EmptyCell(row, column);
     }
 
     @EqualsAndHashCode(callSuper = true)
@@ -80,29 +86,4 @@ public abstract class Cell {
         }
     }
 
-    static EmptyCell at(int row, int column) {
-        return new EmptyCell(row, column);
-    }
-
-    abstract boolean isEmpty();
-
-//    ValuedCell filledWith(int value) {
-//        return filledWith(Integer.toString(value));
-//    }
-//
-//    ValuedCell filledWith(String value) {
-//        return Cell.at(rowIndex, columnIndex).withValue(value);
-//    }
-
-//    @AllArgsConstructor
-//    static class CellBuilder {
-//        int row, column;
-//        Cell withValue(String value) {
-//            if ("_".equals(value)) {
-//                return new EmptyCell(this.row, this.column);
-//            } else {
-//                return new ValuedCell(this.row, this.column, value);
-//            }
-//        }
-//    }
 }

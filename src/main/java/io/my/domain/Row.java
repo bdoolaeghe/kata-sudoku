@@ -1,6 +1,6 @@
-package io.my;
+package io.my.domain;
 
-import io.my.Cell.EmptyCell;
+import io.my.domain.Cell.EmptyCell;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
 @AllArgsConstructor
-public class Row {
+class Row {
 
     int rowIndex;
     String[] content;

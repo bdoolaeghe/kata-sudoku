@@ -1,8 +1,8 @@
-package io.my;
+package io.my.domain;
 
 
-import io.my.Cell.EmptyCell;
-import io.my.Cell.ValuedCell;
+import io.my.domain.Cell.EmptyCell;
+import io.my.domain.Cell.ValuedCell;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
@@ -16,7 +16,7 @@ public class Grid {
 
     String[][] content;
 
-    int getSize() {
+    private int size() {
         return content.length;
     }
 
@@ -86,7 +86,7 @@ public class Grid {
     }
 
     EmptyCell findFistEmptyCell() {
-        for (int i = 0; i < getSize(); i++) {
+        for (int i = 0; i < size(); i++) {
             var cell = getRow(i).findFirstEmptyCell();
             if (cell != null)
                 return cell;
@@ -94,7 +94,7 @@ public class Grid {
         return null;
     }
 
-    static Grid parse(String smallGrid) {
+    public static Grid parse(String smallGrid) {
         var rows = smallGrid.split("\\n");
         int size = rows.length;
         String[][] content = new String[size][size];
@@ -127,7 +127,7 @@ public class Grid {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < getSize(); i++) {
+        for (int i = 0; i < size(); i++) {
             sb.append(getRow(i));
             sb.append("\n");
         }
