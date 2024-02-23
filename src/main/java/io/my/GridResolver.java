@@ -28,10 +28,10 @@ public class GridResolver {
             return grid;
         } else {
             var emptyCell = grid.findFistEmptyCell();
-            for (int i = 1; i < 10; i++) {
-                var candidateValue = emptyCell.filledWith(Integer.toString(i));
-                if (grid.acceptCell(candidateValue)) {
-                    var subSolution = resolve(grid.filledWith(candidateValue));
+            for (int value = 1; value < 10; value++) {
+                var candidate = emptyCell.filledWith(value);
+                if (grid.acceptCell(candidate)) {
+                    var subSolution = resolve(grid.filledWith(candidate));
                     if (subSolution != null) {
                         return subSolution;
                     }

@@ -17,6 +17,10 @@ public class Cell {
         return new CellBuilder(row, column);
     }
 
+    Cell filledWith(int value) {
+        return filledWith(Integer.toString(value));
+    }
+
     Cell filledWith(String value) {
         return Cell.at(rowIndex, columnIndex).withValue(value);
     }
