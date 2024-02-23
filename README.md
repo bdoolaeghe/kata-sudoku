@@ -1,8 +1,11 @@
-= Kata Sudoku =
+Kata Sudoku
+===========
 
-== About ==
+About
+-----
 A simple implementation of sudoku grid resolver
 
-== Run it ==
+Run it
+------
 * edit your grid in `src/main/resources/grid.txt` ("_" means empty cell)
 * run class `io.my.app.Sudoku`
