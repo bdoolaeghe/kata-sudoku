@@ -1,0 +1,25 @@
+build/
+!src/main/**
+!src/test/**
+
+### IntelliJ IDEA ###
+.idea/*
+!.idea/runConfigurations
+!.idea/codeStyles
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Lombok ###
+/src/main/generated/
+/.idea/
