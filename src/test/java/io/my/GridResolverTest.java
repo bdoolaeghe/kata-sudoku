@@ -118,4 +118,23 @@ class GridResolverTest {
                 """
         );
     }
+
+    @Test
+    void should_support_grid_without_solution() {
+        var impossibleGrid = """
+            1 2 9 4 5 6 7 8 _
+            4 5 6 7 8 9 1 2 3
+            7 8 9 1 2 3 4 5 6
+            2 1 4 3 6 5 8 9 7
+            3 6 5 8 9 7 2 1 4
+            8 9 7 2 1 4 3 6 5
+            5 3 1 6 4 2 9 7 8
+            6 4 2 9 7 8 5 3 1
+            9 7 8 5 3 1 6 4 2
+            """;
+
+        var solution = GridResolver.resolve(Grid.parse(impossibleGrid));
+
+        assertThat(solution).isNull();
+    }
 }
